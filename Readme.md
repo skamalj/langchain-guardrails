@@ -10,8 +10,15 @@ This package provides **NeMo integration with LangChain**, addressing a key limi
 ## Installation
 Ensure you have the necessary dependencies installed:
 ```bash
-pip install langchain_openai nemoguardrails langchain_guardrails
+pip install langchain_guardrails
 ```
+
+## Output
+Output from guarrail is a dictionary:
+```
+{"original": <original message", "stop": True/False}
+```
+Utilize `stop` signal to execute next steps.
 
 ## Usage
 Below is an example demonstrating how to integrate NeMo with LangChain and apply guardrails to control responses.
@@ -58,6 +65,3 @@ print(response)
 - The `RailsConfig` must be configured with the correct NeMo guardrails path.
 - Modify `options` to customize how NeMo processes inputs.
 - The `passthrough_or_exit` function ensures controlled responses.
-
-This package enhances **NeMo's capabilities within LangChain**, making it more configurable and adaptable for diverse AI applications.
-
