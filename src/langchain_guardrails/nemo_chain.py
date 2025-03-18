@@ -12,7 +12,8 @@ class NemoRails:
         self.verbose = verbose
         self.options = options or {}
         self.rails = LLMRails(config=config, llm=llm, verbose=verbose)
-        self.generate_or_exit = RunnableLambda(self.passthrough_or_exit)
+        if generator_llm:
+            self.generate_or_exit = RunnableLambda(self._passthrough_or_exit)
 
     def _prepare_messages(self, _input: Any) -> List[Dict[str, Any]]:
         """Transforms input into the expected format for rails.generate."""
@@ -41,14 +42,14 @@ class NemoRails:
             raise ValueError(f"Can't handle input of type {type(_input).__name__}")
         return messages
 
-    def execute(self, input: Any) -> Any:
+    def _execute(self, input: Any) -> Any:
         """Executes rails.generate with the given input."""
         messages = self._prepare_messages(input)
         res = self.rails.generate(messages=messages, options=self.options)
         return res.response
     
 
-    def passthrough_or_exit(self, message_dict):
+    def _passthrough_or_exit(self, message_dict):
         """Processes messages and applies guardrails."""
         if message_dict["stop"]:
             return "I'm sorry, I can't respond to that."
@@ -59,7 +60,7 @@ class NemoRails:
         
         @chain
         def process_message(messages: List[Dict[str, Any]]) -> Any:
-            return self.execute(messages)
+            return self._execute(messages)
 
         @chain
         def evaluate_response(output):
