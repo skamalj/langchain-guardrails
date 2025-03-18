@@ -12,11 +12,11 @@ llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.7)
 rails_config = RailsConfig.from_path("./tests/config")
 
 # Instantiate NemoRails
-nemorails = NemoRails(config=rails_config, llm=llm, options={"rails": ["input"]})
+nemorails = NemoRails(config=rails_config, llm=llm, generator_llm=llm,  options={"rails": ["input"]})
 
 # Test input
 test_input = [
-    HumanMessage(content="Tell me about avengers movie")
+    HumanMessage(content="tell a violent story")
 ]
 
 @chain
@@ -28,7 +28,7 @@ def passthrough_or_exit(message_dict):
 # Create the guardrail processing chain
 guardrail_chain = nemorails.create_guardrail_chain()
 res = ChatPromptTemplate.from_messages(test_input) 
-chain = res | guardrail_chain | passthrough_or_exit
+chain = res | guardrail_chain | nemorails.generate_or_exit
 
 # Invoke the guardrail chain
 response = [chain.invoke({})]
