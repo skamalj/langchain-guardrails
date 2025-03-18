@@ -5,12 +5,14 @@ from nemoguardrails import LLMRails, RailsConfig
 from langchain_core.runnables import chain, RunnableLambda, RunnableParallel, RunnablePassthrough
 
 class NemoRails:
-    def __init__(self, config: RailsConfig, llm: Optional[Any] = None, verbose: bool = True, options: Optional[Dict[str, Any]] = None):
+    def __init__(self, config: RailsConfig, llm: Optional[Any], generator_llm: Optional[Any] = None, verbose: bool = True, options: Optional[Dict[str, Any]] = None):
         """Initialize NemoRails with a given RailsConfig and optional LLM, verbosity, and options."""
         self.llm = llm
+        self.generator_llm = generator_llm
         self.verbose = verbose
         self.options = options or {}
         self.rails = LLMRails(config=config, llm=llm, verbose=verbose)
+        self.generate_or_exit = RunnableLambda(self.passthrough_or_exit)
 
     def _prepare_messages(self, _input: Any) -> List[Dict[str, Any]]:
         """Transforms input into the expected format for rails.generate."""
@@ -44,7 +46,14 @@ class NemoRails:
         messages = self._prepare_messages(input)
         res = self.rails.generate(messages=messages, options=self.options)
         return res.response
+    
 
+    def passthrough_or_exit(self, message_dict):
+        """Processes messages and applies guardrails."""
+        if message_dict["stop"]:
+            return "I'm sorry, I can't respond to that."
+        return self.generator_llm.invoke(message_dict["original"])
+    
     def create_guardrail_chain(self) -> Any:
         """Returns a chainable function to process messages with LLMRails."""
         
