@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langchain_guardrails"
+version = "0.0.2"
+description = "Langchain implementation for Guardrails: Nemo"
+authors = [{name = "Kamal", email = "skamalj@github.com"}]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "langchain-core",
+    "nemoguardrails"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "black",
+    "isort"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/langchain_guardrails"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
