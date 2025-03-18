@@ -16,7 +16,7 @@ nemorails = NemoRails(config=rails_config, llm=llm, generator_llm=llm,  options=
 
 # Test input
 test_input = [
-    HumanMessage(content="Tell me about avengers movie")
+    HumanMessage(content="tell a violent story")
 ]
 
 @chain

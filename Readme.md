@@ -79,4 +79,8 @@ print(response)
 ## Notes
 - The `RailsConfig` must be configured with the correct NeMo guardrails path.
 - Modify `options` to customize how NeMo processes inputs.
+- Tools messages are **not checked**
+
+## Credits
+This package uses code from [nemoguardrails](https://github.com/NVIDIA/NeMo-Guardrails/blob/develop/nemoguardrails/integrations/langchain/runnable_rails.py), licensed under [ Apache-2.0].
 
