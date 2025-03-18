@@ -4,7 +4,7 @@ This package provides **NeMo integration with LangChain**, addressing a key limi
 
 ## Features
 - **Customizable NeMo options**: Control what NeMo generates.
-- **Flexible LLM integration**: Use different LLMs for NeMo and response generation.
+- **Flexible LLM integration**: Use different LLMs for NeMo and response generation. Utilize tools binding as needed.
 - **Guardrails integration**: Ensure AI-generated responses adhere to predefined constraints.
 
 ## Installation
