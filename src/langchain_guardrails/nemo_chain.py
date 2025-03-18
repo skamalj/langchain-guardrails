@@ -10,7 +10,7 @@ class NemoRails:
         self.llm = llm
         self.generator_llm = generator_llm
         self.verbose = verbose
-        self.options = options or {}
+        self.options = options or {"rails": ["input"]}
         self.rails = LLMRails(config=config, llm=llm, verbose=verbose)
         if generator_llm:
             self.generate_or_exit = RunnableLambda(self._passthrough_or_exit)

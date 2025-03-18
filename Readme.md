@@ -3,7 +3,7 @@
 This package provides **NeMo integration with LangChain**, addressing a key limitation in existing NeMo runnables. Specifically, it enables **configurable options for NeMo**, offering greater control over what is generated. Additionally, it allows flexibility in using **different LLMs for NeMo and text generation**, enhancing adaptability for various use cases.
 
 ## Features
-- **Customizable NeMo options**: Control what NeMo generates.
+- **Customizable NeMo options**: Control what NeMo generates by utilizing generation options described [here](https://docs.nvidia.com/nemo/guardrails/latest/user-guides/advanced/generation-options.html)
 - **Flexible LLM integration**: Use different LLMs for NeMo and response generation. Utilize tools binding as needed.
 - **Guardrails integration**: Ensure AI-generated responses adhere to predefined constraints.
 
@@ -12,6 +12,8 @@ Ensure you have the necessary dependencies installed:
 ```bash
 pip install langchain_guardrails
 ```
+## Input
+Default behaviour is to execute only rails and generation is left for surround to handle i.e default for options is set to `{"rails": ["input"]}`
 
 ## Output
 Output from guarrail is a dictionary:
@@ -21,8 +23,21 @@ Output from guarrail is a dictionary:
 Utilize `stop` signal to execute next steps.
 
 ## Usage
-Below is an example demonstrating how to integrate NeMo with LangChain and apply guardrails to control responses.
+Below is an example demonstrating how to integrate NeMo with LangChain and apply guardrails to control responses. Here we use **custom generator function** `passthrough_or_exit`
 
+## Inbuilt generator function
+This package has **inbuilt function for generation** - `generate_or_exit` -  which is enabled when `generator_llm` is passed.  You can use that as well to complete your generation.
+```python
+# Create the guardrail processing chain
+guardrail_chain = nemorails.create_guardrail_chain()
+res = ChatPromptTemplate.from_messages(test_input) 
+chain = res | guardrail_chain | nemorails.generate_or_exit
+
+# Invoke the guardrail chain
+response = [chain.invoke({})]
+```
+
+## Custom generator function
 ```python
 from langchain_openai import ChatOpenAI
 from nemoguardrails import RailsConfig
@@ -64,4 +79,4 @@ print(response)
 ## Notes
 - The `RailsConfig` must be configured with the correct NeMo guardrails path.
 - Modify `options` to customize how NeMo processes inputs.
-- The `passthrough_or_exit` function ensures controlled responses.
+

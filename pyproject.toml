@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "langchain_guardrails"
-version = "0.0.2"
+version = "0.0.3"
 description = "Langchain implementation for Guardrails: Nemo"
 authors = [{name = "Kamal", email = "skamalj@github.com"}]
 readme = "README.md"
@@ -32,7 +32,7 @@ packages = ["src/langchain_guardrails"]
 
 [tool.black]
 line-length = 88
-target-version = ['py39']
+target-version = ['py310']
 
 [tool.isort]
 profile = "black"
