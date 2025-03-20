@@ -12,8 +12,23 @@ Ensure you have the necessary dependencies installed:
 ```bash
 pip install langchain_guardrails
 ```
-## Input
-Default behaviour is to execute only rails and generation is left for surround to handle i.e default for options is set to `{"rails": ["input"]}`
+
+# NemoRails Initialization Parameters
+
+The `__init__` method initializes an instance of `NemoRails` with a given configuration and optional parameters.
+
+| Parameter       | Type                           | Default  | Description |
+|---------------|------------------------------|---------|-------------|
+| `config`       | `RailsConfig`                  | Required | Configuration object for NemoRails. |
+| `llm`          | `Optional[Any]`               | `None`   | Optional LLM instance used for processing. This must be available either in config or here. |
+| `generator_llm` | `Optional[Any]`               | `None`   | Optional LLM instance for text generation. |
+| `verbose`      | `bool`                         | `True`   | Enables verbose logging if `True`. |
+| `options`      | `Optional[Dict[str, Any]]`     | `None`   | Additional options, defaults to `{"rails": ["input"]}`. |
+
+## Behavior
+- Initializes `LLMRails` using the provided `config`, `llm`, and `verbose` flag.
+- If `generator_llm` is provided, it sets up `generate_or_exit` using `RunnableLambda`.
+- `options` default behaviour is to execute only rails and generation is left for surround to handle i.e default for options is set to `{"rails": ["input"]}`. Read [here](https://docs.nvidia.com/nemo/guardrails/latest/user-guides/advanced/generation-options.html)
 
 ## Output
 Output from guarrail is a dictionary:
