@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "langchain_guardrails"
-version = "0.0.4"
+version = "0.0.5"
 description = "Langchain implementation for Guardrails: Nemo"
 authors = [{name = "Kamal", email = "skamalj@github.com"}]
 readme = "README.md"
@@ -14,8 +14,8 @@ license-files = [
     "LICENSE*"
 ]
 dependencies = [
-    "langchain-core==0.3.45",
-    "nemoguardrails==0.12.0"
+    "langchain-core>=0.3.45",
+    "nemoguardrails>=0.11.0"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
