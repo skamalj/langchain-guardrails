@@ -52,7 +52,7 @@ class NemoRails:
     def _passthrough_or_exit(self, message_dict):
         """Processes messages and applies guardrails."""
         if message_dict["stop"]:
-            return "I'm sorry, I can't respond to that."
+            return [AIMessage("I'm sorry, I can't respond to that.")]
         return self.generator_llm.invoke(message_dict["original"])
     
     def create_guardrail_chain(self) -> Any:

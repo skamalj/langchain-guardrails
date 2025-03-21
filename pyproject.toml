@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "langchain_guardrails"
-version = "0.0.5"
+version = "0.0.6"
 description = "Langchain implementation for Guardrails: Nemo"
 authors = [{name = "Kamal", email = "skamalj@github.com"}]
 readme = "README.md"
